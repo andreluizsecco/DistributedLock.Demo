@@ -15,7 +15,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
     ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")!)
 );
 
-// Usando o pacote DistributedLock.RedisRedLock.net
+// Usando o pacote RedLock.net
 
 //builder.Services.AddSingleton<IDistributedLockFactory>(sp =>
 //{
@@ -30,22 +30,22 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 
 // Usando o pacote DistributedLock.Redis
 
-//builder.Services.AddSingleton<IDistributedLockProvider>(sp =>
-//{
-//    var connection = sp.GetRequiredService<IConnectionMultiplexer>();
-//    return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
-//});
+builder.Services.AddSingleton<IDistributedLockProvider>(sp =>
+{
+    var connection = sp.GetRequiredService<IConnectionMultiplexer>();
+    return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
+});
 
 // Usando o pacote DistributedLock.Azure
 
-builder.Services.AddSingleton<IDistributedLockProvider>(sp =>
-{
-    var blobContainerClient = new Azure.Storage.Blobs.BlobContainerClient(
-        builder.Configuration.GetConnectionString("AzureStorageAccountConnection")!,
-        "distributed-locks"
-    );
-    return new AzureBlobLeaseDistributedSynchronizationProvider(blobContainerClient);
-});
+//builder.Services.AddSingleton<IDistributedLockProvider>(sp =>
+//{
+//    var blobContainerClient = new Azure.Storage.Blobs.BlobContainerClient(
+//        builder.Configuration.GetConnectionString("AzureStorageAccountConnection")!,
+//        "distributed-locks"
+//    );
+//    return new AzureBlobLeaseDistributedSynchronizationProvider(blobContainerClient);
+//});
 
 builder.Services.AddSingleton<IDistributedLockService, DistributedLockService>();
 

@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Program.cs~RF6ca49b5.TMP" />
-    <None Remove="Program.cs~RF6d5cad6.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DistributedLock.Azure" Version="1.0.2" />
     <PackageReference Include="DistributedLock.Redis" Version="1.1.1" />
     <PackageReference Include="FluentResults" Version="4.0.0" />
